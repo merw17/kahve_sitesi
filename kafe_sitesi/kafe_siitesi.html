@@ -1,0 +1,274 @@
+<!-- öindex.html -->
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kahve Dünyası</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
+  />
+
+  <script src="https://unpkg.com/grapesjs"></script>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f7f3ef;
+    }
+
+    #gjs{
+      height:100vh;
+      overflow:hidden;
+    }
+
+    .hero{
+      height:100vh;
+      background:url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop') center/cover;
+      color:white;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      flex-direction:column;
+    }
+
+    .hero h1{
+      font-size:70px;
+      margin-bottom:20px;
+      text-shadow:2px 2px 10px black;
+    }
+
+    .hero p{
+      font-size:24px;
+      margin-bottom:30px;
+      text-shadow:2px 2px 10px black;
+    }
+
+    .hero button{
+      padding:15px 35px;
+      border:none;
+      background:#6f4e37;
+      color:white;
+      font-size:18px;
+      border-radius:10px;
+      cursor:pointer;
+    }
+
+    .menu{
+      padding:80px 10%;
+      text-align:center;
+    }
+
+    .menu h2{
+      font-size:45px;
+      margin-bottom:50px;
+      color:#6f4e37;
+    }
+
+    .cards{
+      display:flex;
+      gap:30px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .card{
+      background:white;
+      width:300px;
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 5px 15px rgba(0,0,0,.15);
+    }
+
+    .card img{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+    }
+
+    .card h3{
+      margin:15px 0;
+      color:#333;
+    }
+
+    .card p{
+      padding:0 20px 20px;
+      color:#666;
+    }
+
+    .about{
+      padding:80px 10%;
+      background:#fff;
+      text-align:center;
+    }
+
+    .about h2{
+      font-size:45px;
+      margin-bottom:30px;
+      color:#6f4e37;
+    }
+
+    .about p{
+      max-width:800px;
+      margin:auto;
+      line-height:1.8;
+      font-size:18px;
+      color:#555;
+    }
+
+    footer{
+      background:#2d1e16;
+      color:white;
+      text-align:center;
+      padding:30px;
+    }
+
+    .save-btn{
+      position:fixed;
+      top:15px;
+      right:15px;
+      z-index:9999;
+      border:none;
+      padding:15px 25px;
+      background:#2563eb;
+      color:white;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:16px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<button class="save-btn" onclick="savePage()">
+  Kaydet
+</button>
+
+<div id="gjs">
+
+  <section class="hero">
+
+    <h1>Kahve Dünyası</h1>
+
+    <p>
+      Taze kahve, sıcak ortam, unutulmaz tatlar.
+    </p>
+
+    <button>
+      Menüye Göz At
+    </button>
+
+  </section>
+
+  <section class="menu">
+
+    <h2>Popüler Kahveler</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200&auto=format&fit=crop">
+
+        <h3>Latte</h3>
+
+        <p>
+          Yumuşak içimli sütlü kahve deneyimi.
+        </p>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=1200&auto=format&fit=crop">
+
+        <h3>Espresso</h3>
+
+        <p>
+          Yoğun aromalı güçlü kahve.
+        </p>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1494314671902-399b18174975?q=80&w=1200&auto=format&fit=crop">
+
+        <h3>Cappuccino</h3>
+
+        <p>
+          Köpüklü ve dengeli lezzet.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="about">
+
+    <h2>Hakkımızda</h2>
+
+    <p>
+      Kahve Dünyası olarak müşterilerimize kaliteli kahve deneyimi sunuyoruz.
+      Günlük taze çekilen kahvelerimiz ve samimi ortamımız ile sizleri bekliyoruz.
+    </p>
+
+  </section>
+
+  <footer>
+
+    © 2026 Kahve Dünyası - Tüm Hakları Saklıdır
+
+  </footer>
+
+</div>
+
+<script>
+
+  const editor = grapesjs.init({
+    container : '#gjs',
+    fromElement: true,
+    height: '100vh',
+    storageManager:false
+  });
+
+  async function savePage(){
+
+    const html = editor.getHtml();
+    const css = editor.getCss();
+
+    const response = await fetch('/save', {
+
+      method:'POST',
+
+      headers:{
+        'Content-Type':'application/json'
+      },
+
+      body: JSON.stringify({
+        html,
+        css
+      })
+
+    });
+
+    const result = await response.text();
+
+    alert(result);
+  }
+
+</script>
+
+</body>
+</html>
